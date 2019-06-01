@@ -1,11 +1,8 @@
 import SpriteKit
-import UIKit
 
 public class DVDScene: SKScene {
 
   private let dvdNode: SKNode
-  private var boundingBoxNode: SKShapeNode!
-  private var boundingBoxSize: CGSize = CGSize(width: 0, height: 0)
   private var moveTransform = CGAffineTransform(translationX: 1.0, y: 1.0)
   private var changeColor: SKAction {
     return SKAction.colorize(with: UIColor.generateRandomColor(), colorBlendFactor: 1.0, duration: 0)
@@ -28,6 +25,7 @@ public class DVDScene: SKScene {
 
   // Update is called once per frame
   public override func update(_ currentTime: TimeInterval) {
+    // Collect a reference frame for the node's current position
     let currentFrame = dvdNode.calculateAccumulatedFrame()
 
     // Top bound
@@ -54,6 +52,7 @@ public class DVDScene: SKScene {
       dvdNode.run(changeColor)
     }
 
+    // Update the node's position by applying the transform
     dvdNode.position = dvdNode.position.applying(moveTransform)
   }
 }
@@ -61,6 +60,6 @@ public class DVDScene: SKScene {
 private extension UIColor {
   static func generateRandomColor() -> UIColor {
     let hue = CGFloat(arc4random() % 256) / 256 // use 256 to get full range from 0.0 to 1.0
-    return UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
+    return UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1) // Max saturation, max brightness
   }
 }
